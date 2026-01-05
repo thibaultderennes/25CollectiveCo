@@ -1,0 +1,113 @@
+---
+// src/pages/index.astro
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>25CollectiveCo</title>
+  <meta name="description" content="25CollectiveCo - A collective of creative projects" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>25CollectiveCo</h1>
+    <p class="motto">Building the future, one project at a time</p>
+    
+    <!-- Optional video embed -->
+    <div class="video-container">
+      <!-- Replace with your YouTube/Vimeo embed URL -->
+      <!-- <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+    </div>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tabs">
+    <a href="#projects" class="tab-link">Current Projects</a>
+    <a href="#about" class="tab-link">About</a>
+    <a href="#archive" class="tab-link">Archive</a>
+    <a href="#contact" class="tab-link">Contact</a>
+    <a href="/blog" class="tab-link">Blog</a>
+  </nav>
+
+  <!-- Main Content Sections -->
+  <main>
+    <!-- Current Projects Section -->
+    <section id="projects" class="section">
+      <h2>Current Projects</h2>
+      <div class="content">
+        <p>Our current projects represent the cutting edge of what we're building.</p>
+        <!-- Add your projects here -->
+        <article class="project">
+          <h3>Project One</h3>
+          <p>Description of your first project goes here.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <h2>About</h2>
+      <div class="content">
+        <p>25CollectiveCo is a collective focused on creating meaningful work that matters.</p>
+        <p>We believe in simplicity, clarity, and purposeful design.</p>
+      </div>
+    </section>
+
+    <!-- Archive Section -->
+    <section id="archive" class="section">
+      <h2>Archive</h2>
+      <div class="content">
+        <p>A collection of our past projects and explorations.</p>
+        <!-- Add archived projects here -->
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="content">
+        <p>Get in touch with us:</p>
+        <p>Email: <a href="mailto:hello@25collectiveco.com">hello@25collectiveco.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <p>© 2026 25CollectiveCo</p>
+      <div class="footer-links">
+        <a href="mailto:hello@25collectiveco.com">Email</a>
+        <!-- Add your social links -->
+        <!-- <a href="https://twitter.com/yourhandle" target="_blank">Twitter</a> -->
+        <!-- <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a> -->
+      </div>
+    </div>
+  </footer>
+
+  <!-- Progressive enhancement for tab visibility toggling -->
+  <script>
+    // Simple tab behavior enhancement (works without JS too via anchors)
+    const tabs = document.querySelectorAll('.tab-link');
+    const sections = document.querySelectorAll('.section');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const href = tab.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const targetSection = document.querySelector(href);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

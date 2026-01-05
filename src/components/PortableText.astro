@@ -1,0 +1,78 @@
+---
+// src/components/PortableText.astro
+// Component to render Sanity Portable Text content
+interface Props {
+  value: any[];
+}
+
+const { value } = Astro.props;
+
+function renderBlock(block: any): string {
+  if (!block) return '';
+
+  switch (block._type) {
+    case 'block':
+      return renderBlockContent(block);
+    case 'image':
+      return `<img src="${block.asset?.url || ''}" alt="${block.alt || ''}" />`;
+    default:
+      return '';
+  }
+}
+
+function renderBlockContent(block: any): string {
+  const style = block.style || 'normal';
+  const children = renderChildren(block.children || []);
+
+  switch (style) {
+    case 'h1':
+      return `<h1>${children}</h1>`;
+    case 'h2':
+      return `<h2>${children}</h2>`;
+    case 'h3':
+      return `<h3>${children}</h3>`;
+    case 'h4':
+      return `<h4>${children}</h4>`;
+    case 'blockquote':
+      return `<blockquote>${children}</blockquote>`;
+    case 'normal':
+    default:
+      return `<p>${children}</p>`;
+  }
+}
+
+function renderChildren(children: any[]): string {
+  return children.map(child => {
+    if (child._type === 'span') {
+      let text = child.text || '';
+      
+      // Apply marks
+      if (child.marks && child.marks.length > 0) {
+        child.marks.forEach((mark: string) => {
+          switch (mark) {
+            case 'strong':
+              text = `<strong>${text}</strong>`;
+              break;
+            case 'em':
+              text = `<em>${text}</em>`;
+              break;
+            case 'code':
+              text = `<code>${text}</code>`;
+              break;
+            case 'underline':
+              text = `<u>${text}</u>`;
+              break;
+          }
+        });
+      }
+      
+      return text;
+    }
+    return '';
+  }).join('');
+}
+
+const html = value?.map(block => renderBlock(block)).join('\n') || '';
+---
+
+<Fragment set:html={html} />

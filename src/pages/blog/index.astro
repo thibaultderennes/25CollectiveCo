@@ -2,6 +2,7 @@
 // src/pages/blog/index.astro
 import { getAllPosts } from '../../lib/queries';
 import '../../styles/global.css';
+import Topbar from "../../components/Topbar.astro";
 
 const posts = await getAllPosts();
 ---
@@ -17,6 +18,7 @@ const posts = await getAllPosts();
   <link rel="alternate" type="application/rss+xml" title="25CollectiveCo Blog" href="/rss.xml" />
 </head>
 <body>
+  <Topbar />
   <div class="blog-post">
     <a href="/" class="blog-back-link">← Back to Home</a>
     

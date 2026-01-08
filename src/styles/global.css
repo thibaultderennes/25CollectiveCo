@@ -24,7 +24,7 @@ body {
 /* Typography */
 h1 {
   font-size: 3rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
 }
@@ -75,33 +75,42 @@ a:hover {
   margin-bottom: 2rem;
 }
 
-.video-container {
-  margin-top: 2rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-.video-container iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-}
-
-/* Tab Navigation */
-.tabs {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-  border-top: 1px solid #000000;
-  border-bottom: 1px solid #000000;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem;
+  background: #fff;
+}
+
+.menu {
+  display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border-bottom: none;
+  padding: 0.5rem 0;
+  font-weight: 500;
+}
+
+.logo:hover {
+  opacity: 0.6;
 }
 
 .tab-link {
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.3em;
   border-bottom: none;
   padding: 0.5rem 0;
 }

@@ -298,11 +298,21 @@ footer {
 
   .hero {
     padding: 2rem 1rem;
-    min-height: 50vh;
+    min-height: 95vh;
   }
 
   .tabs {
     gap: 1rem;
+  }
+
+    /* hide all links */
+  .tab-link {
+    display: none;
+  }
+
+  /* show only blog */
+  .tab-blog {
+    display: inline;
   }
 
   main {

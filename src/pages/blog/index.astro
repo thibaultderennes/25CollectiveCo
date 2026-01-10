@@ -28,7 +28,7 @@ const posts = await getAllPosts();
     </header>
 
     {posts.length === 0 ? (
-      <p>No posts yet. Check back soon!</p>
+      <p class="motto">No posts yet. Check back soon!</p>
     ) : (
       <ul class="blog-list">
         {posts.map((post) => (

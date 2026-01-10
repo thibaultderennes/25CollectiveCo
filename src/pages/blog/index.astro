@@ -23,8 +23,8 @@ const posts = await getAllPosts();
     <a href="/" class="blog-back-link">← Back to Home</a>
     
     <header class="blog-post-header">
-      <h1>Blog</h1>
-      <p>Thoughts, updates, and explorations from the collective</p>
+      <h2>Blog</h2>
+      <p class="motto">Thoughts, updates, and explorations from the collective.</p>
     </header>
 
     {posts.length === 0 ? (
@@ -41,11 +41,11 @@ const posts = await getAllPosts();
                   day: 'numeric'
                 })}
               </time>
-              <h2>
+              <h4><b>
                 <a href={`/blog/${post.slug}`}>{post.title}</a>
-              </h2>
+              </b></h4>
               {post.description && (
-                <p class="blog-excerpt">{post.description}</p>
+                <p class="motto">{post.description}</p>
               )}
             </article>
           </li>

@@ -65,8 +65,8 @@ const ogURL = canonicalURL.toString();
             day: 'numeric'
           })}
         </time>
-        <h1>{post.title}</h1>
-        {post.description && <p>{post.description}</p>}
+        <h4><b>{post.title}</b></h4>
+        {post.description && <p class="motto">{post.description}</p>}
       </header>
 
       {post.coverImage && (

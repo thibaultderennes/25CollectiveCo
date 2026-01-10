@@ -31,7 +31,7 @@ h1 {
 
 h2 {
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 200;
   letter-spacing: -0.01em;
   margin-bottom: 1rem;
 }
@@ -40,6 +40,19 @@ h3 {
   font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: 200;
+  margin-bottom: 0.25rem;
+  opacity: 0.6;
 }
 
 p {
@@ -57,24 +70,7 @@ a:hover {
   opacity: 0.6;
 }
 
-/* Hero Section */
-.hero {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  text-align: center;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.motto {
-  font-size: 1.25rem;
-  font-weight: 300;
-  margin-bottom: 2rem;
-}
-
+/* Navbar Section */
 .topbar {
   position: sticky;
   top: 0;
@@ -119,6 +115,24 @@ a:hover {
   opacity: 0.6;
 }
 
+/* Hero Section */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.motto {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
 /* Main Content */
 main {
   max-width: 1200px;
@@ -136,7 +150,8 @@ main {
 }
 
 .content {
-  max-width: 700px;
+  max-width: 850px;
+  text-align: justify;
 }
 
 /* Projects */
@@ -150,9 +165,13 @@ main {
   border-bottom: none;
 }
 
+.project-title {
+  display: flex;
+  gap: 10px;
+}
+
 /* Footer */
 footer {
-  border-top: 1px solid #000000;
   padding: 2rem;
   margin-top: 4rem;
 }
@@ -161,15 +180,9 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-}
-
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
 }
 
 /* Blog Styles */

@@ -52,6 +52,7 @@ export default {
             { title: 'H1', value: 'h1' },
             { title: 'H2', value: 'h2' },
             { title: 'H3', value: 'h3' },
+            { tittle: "Motto", value: "motto" },
             { title: 'Quote', value: 'blockquote' },
           ],
           marks: {

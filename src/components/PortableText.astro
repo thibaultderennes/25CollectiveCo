@@ -35,9 +35,11 @@ function renderBlockContent(block: any): string {
       return `<h4>${children}</h4>`;
     case 'blockquote':
       return `<blockquote>${children}</blockquote>`;
+    case 'motto':
+      return `<p class="motto">${children}</p>`;
     case 'normal':
     default:
-      return `<p class="motto">${children}</p>`;
+      return `<p>${children}</p>`;
   }
 }
 

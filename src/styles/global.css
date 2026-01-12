@@ -248,6 +248,17 @@ footer {
   margin-bottom: 0.75rem;
 }
 
+.portable-text p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+.portable-text p:last-child {
+  margin-bottom: 0;
+}
+
 .portable-text ul,
 .portable-text ol {
   margin-left: 2rem;

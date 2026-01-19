@@ -1,0 +1,16 @@
+---
+import Analytics from '@vercel/analytics/astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <slot name="head" />
+  </head>
+
+  <body>
+    <slot />
+    <Analytics />
+  </body>
+</html>

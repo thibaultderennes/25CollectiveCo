@@ -3,6 +3,7 @@
 import { getAllPosts, getPostBySlug } from '../../lib/queries';
 import PortableText from '../../components/PortableText.astro';
 import '../../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();
@@ -23,60 +24,62 @@ const canonicalURL = new URL(`/blog/${post.slug}`, Astro.site);
 const ogURL = canonicalURL.toString();
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{post.title} - 25CollectiveCo</title>
-  <meta name="description" content={post.description || post.title} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href={canonicalURL} />
-  
-  <!-- OpenGraph tags -->
-  <meta property="og:title" content={post.title} />
-  <meta property="og:description" content={post.description || post.title} />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content={ogURL} />
-  {post.coverImage && (
-    <meta property="og:image" content={post.coverImage} />
-  )}
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={post.title} />
-  <meta name="twitter:description" content={post.description || post.title} />
-  {post.coverImage && (
-    <meta name="twitter:image" content={post.coverImage} />
-  )}
-</head>
-<body>
-  <div class="blog-post">
-    <a href="/blog" class="blog-back-link">← Back to Blog</a>
+<BaseLayout>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{post.title} - 25CollectiveCo</title>
+    <meta name="description" content={post.description || post.title} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
-    <article>
-      <header class="blog-post-header">
-        <time class="blog-date" datetime={post.publishedAt}>
-          {new Date(post.publishedAt).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </time>
-        <h4><b>{post.title}</b></h4>
-        {post.description && <p class="motto">{post.description}</p>}
-      </header>
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- OpenGraph tags -->
+    <meta property="og:title" content={post.title} />
+    <meta property="og:description" content={post.description || post.title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={ogURL} />
+    {post.coverImage && (
+      <meta property="og:image" content={post.coverImage} />
+    )}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.title} />
+    <meta name="twitter:description" content={post.description || post.title} />
+    {post.coverImage && (
+      <meta name="twitter:image" content={post.coverImage} />
+    )}
+  </head>
+  <body>
+    <div class="blog-post">
+      <a href="/blog" class="blog-back-link">← Back to Blog</a>
+      
+      <article>
+        <header class="blog-post-header">
+          <time class="blog-date" datetime={post.publishedAt}>
+            {new Date(post.publishedAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+          <h4><b>{post.title}</b></h4>
+          {post.description && <p class="motto">{post.description}</p>}
+        </header>
 
-      {post.coverImage && (
-        <img src={post.coverImage} alt={post.title} />
-      )}
+        {post.coverImage && (
+          <img src={post.coverImage} alt={post.title} />
+        )}
 
-      <div class="portable-text">
-        <PortableText value={post.body} />
-      </div>
-    </article>
-  </div>
-</body>
-</html>
+        <div class="portable-text">
+          <PortableText value={post.body} />
+        </div>
+      </article>
+    </div>
+  </body>
+  </html>
+</BaseLayout>

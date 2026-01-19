@@ -3,55 +3,58 @@
 import { getAllPosts } from '../../lib/queries';
 import '../../styles/global.css';
 import Topbar from "../../components/Topbar.astro";
-
 const posts = await getAllPosts();
+import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog - 25CollectiveCo</title>
-  <meta name="description" content="Read our latest thoughts and updates" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate" type="application/rss+xml" title="25CollectiveCo Blog" href="/rss.xml" />
-</head>
-<body>
-  <Topbar />
-  <div class="blog-post">
-    <a href="/" class="blog-back-link">← Back to Home</a>
-    
-    <header class="blog-post-header">
-      <h2>Blog</h2>
-      <p class="motto">Thoughts, updates, and explorations from the collective.</p>
-    </header>
+<BaseLayout>
+  <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Blog - 25CollectiveCo</title>
+      <meta name="description" content="Read our latest thoughts and updates" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="alternate" type="application/rss+xml" title="25CollectiveCo Blog" href="/rss.xml" />
+    </head>
+    <body>
+      <Topbar />
+      <div class="blog-post">
+        <a href="/" class="blog-back-link">← Back to Home</a>
+        
+        <header class="blog-post-header">
+          <h2>Blog</h2>
+          <p class="motto">Thoughts, updates, and explorations from the collective.</p>
+        </header>
 
-    {posts.length === 0 ? (
-      <p class="motto">No posts yet. Check back soon!</p>
-    ) : (
-      <ul class="blog-list">
-        {posts.map((post) => (
-          <li class="blog-item">
-            <article>
-              <time class="blog-date" datetime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </time>
-              <h4><b>
-                <a href={`/blog/${post.slug}`}>{post.title}</a>
-              </b></h4>
-              {post.description && (
-                <p class="motto">{post.description}</p>
-              )}
-            </article>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-</body>
-</html>
+        {posts.length === 0 ? (
+          <p class="motto">No posts yet. Check back soon!</p>
+        ) : (
+          <ul class="blog-list">
+            {posts.map((post) => (
+              <li class="blog-item">
+                <article>
+                  <time class="blog-date" datetime={post.publishedAt}>
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                  <h4><b>
+                    <a href={`/blog/${post.slug}`}>{post.title}</a>
+                  </b></h4>
+                  {post.description && (
+                    <p class="motto">{post.description}</p>
+                  )}
+                </article>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </body>
+    </html>
+</BaseLayout>
+

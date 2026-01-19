@@ -3,7 +3,7 @@
 import { getAllPosts, getPostBySlug } from '../../lib/queries';
 import PortableText from '../../components/PortableText.astro';
 import '../../styles/global.css';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();
@@ -25,9 +25,7 @@ const ogURL = canonicalURL.toString();
 ---
 
 <BaseLayout>
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
+  <Fragment slot="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{post.title} - 25CollectiveCo</title>
@@ -53,8 +51,8 @@ const ogURL = canonicalURL.toString();
     {post.coverImage && (
       <meta name="twitter:image" content={post.coverImage} />
     )}
-  </head>
-  <body>
+  </Fragment>
+
     <div class="blog-post">
       <a href="/blog" class="blog-back-link">← Back to Blog</a>
       
@@ -80,6 +78,4 @@ const ogURL = canonicalURL.toString();
         </div>
       </article>
     </div>
-  </body>
-  </html>
 </BaseLayout>

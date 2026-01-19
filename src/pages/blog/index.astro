@@ -8,19 +8,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <!DOCTYPE html>
-    <html lang="en">
-    <head>
+    <Fragment>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Blog - 25CollectiveCo</title>
       <meta name="description" content="Read our latest thoughts and updates" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternate" type="application/rss+xml" title="25CollectiveCo Blog" href="/rss.xml" />
-    </head>
-    <body>
-      <Topbar />
-      <div class="blog-post">
+    </Fragment>
+
+    <Topbar />
+
+
+    <div class="blog-post">
         <a href="/" class="blog-back-link">← Back to Home</a>
         
         <header class="blog-post-header">
@@ -54,7 +54,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </ul>
         )}
       </div>
-    </body>
-    </html>
 </BaseLayout>
 

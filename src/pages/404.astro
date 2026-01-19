@@ -5,33 +5,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
+  <Fragment slot="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - Page Not Found | 25CollectiveCo</title>
     <meta name="description" content="The page you're looking for doesn't exist." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="robots" content="noindex, nofollow" />
-  </head>
-  <body>
-    <div class="blog-post">
-      <header class="blog-post-header" style="text-align: center;">
-        <h4><b>404</b></h4>
-        <p class="motto">Page Not Found</p>
-      </header>
+  </Fragment>
 
-      <div class="content" style="text-align: center; max-width: 600px; margin: 0 auto;">
-        <p class="motto">The page you're looking for doesn't exist or has been moved.</p>
-        <p style="margin-top: 2rem;" class="motto"
-        
-        
-        >
-          <a href="/">Return to Home</a> or <a href="/blog">Browse Blog</a>
-        </p>
-      </div>
+  
+  <div class="blog-post">
+    <header class="blog-post-header" style="text-align: center;">
+      <h4><b>404</b></h4>
+      <p class="motto">Page Not Found</p>
+    </header>
+
+    <div class="content" style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <p class="motto">The page you're looking for doesn't exist or has been moved.</p>
+      <p style="margin-top: 2rem;" class="motto">
+        <a href="/">Return to Home</a> or <a href="/blog">Browse Blog</a>
+      </p>
     </div>
-  </body>
-  </html>
+  </div>
 </BaseLayout>

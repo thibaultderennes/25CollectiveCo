@@ -7,6 +7,9 @@ interface Props {
 
 const { value } = Astro.props;
 
+const esc = (s: string) =>
+  String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
 function renderBlock(block: any): string {
   if (!block) return '';
 
@@ -14,7 +17,7 @@ function renderBlock(block: any): string {
     case 'block':
       return renderBlockContent(block);
     case 'image':
-      return `<img src="${block.asset?.url || ''}" alt="${block.alt || ''}" />`;
+      return `<img src="${esc(block.asset?.url || '')}" alt="${esc(block.alt || '')}" />`;
     default:
       return '';
   }
@@ -22,7 +25,7 @@ function renderBlock(block: any): string {
 
 function renderBlockContent(block: any): string {
   const style = block.style || 'normal';
-  const children = renderChildren(block.children || []);
+  const children = renderChildren(block.children || [], block.markDefs || []);
 
   switch (style) {
     case 'h1':
@@ -43,11 +46,11 @@ function renderBlockContent(block: any): string {
   }
 }
 
-function renderChildren(children: any[]): string {
+function renderChildren(children: any[], markDefs: any[]): string {
   return children.map(child => {
     if (child._type === 'span') {
-      let text = child.text || '';
-      
+      let text = esc(child.text || '');
+
       // Apply marks
       if (child.marks && child.marks.length > 0) {
         child.marks.forEach((mark: string) => {
@@ -64,17 +67,40 @@ function renderChildren(children: any[]): string {
             case 'underline':
               text = `<u>${text}</u>`;
               break;
+            default: {
+              const def = markDefs.find((d: any) => d._key === mark);
+              if (def?._type === 'link' && /^(https?:|mailto:)/.test(def.href || '')) {
+                const external = /^https?:/.test(def.href) && !def.href.includes('25collectiveco.com');
+                text = `<a href="${esc(def.href)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${text}</a>`;
+              }
+            }
           }
         });
       }
-      
+
       return text;
     }
     return '';
   }).join('');
 }
 
-const html = value?.map(block => renderBlock(block)).join('\n') || '';
+// Consecutive list items become one <ul>/<ol>.
+function renderAll(blocks: any[]): string {
+  const out: string[] = [];
+  let list: { tag: string; items: string[] } | null = null;
+  const close = () => { if (list) { out.push(`<${list.tag}>${list.items.join('')}</${list.tag}>`); list = null; } };
+  for (const b of blocks || []) {
+    if (b?._type === 'block' && b.listItem) {
+      const tag = b.listItem === 'number' ? 'ol' : 'ul';
+      if (!list || list.tag !== tag) { close(); list = { tag, items: [] }; }
+      list.items.push(`<li>${renderChildren(b.children || [], b.markDefs || [])}</li>`);
+    } else { close(); out.push(renderBlock(b)); }
+  }
+  close();
+  return out.join('\n');
+}
+
+const html = renderAll(value);
 ---
 
 <Fragment set:html={html} />

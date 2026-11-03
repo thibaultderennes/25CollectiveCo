@@ -1,0 +1,28 @@
+{
+  "projects_root": "~/Projects",
+  "jarvis_root": "~/Projects/Jarvis",
+  "jarvis_project": "25cc",
+  "timezone": "America/Toronto",
+  "window_days": 7,
+  "sanity": {
+    "project_id": "ae0tgdfg",
+    "dataset": "production",
+    "api_version": "2024-01-01"
+  },
+  "studio_url": "",
+  "site_url": "https://25collectiveco.com",
+  "model": "",
+  "voice": "First person singular, plain and direct, builder-in-public. Honest about what failed and what it cost. Concrete numbers and tools over hype. Short paragraphs, a few H2 sections, one clear takeaway. 900-1500 words. No emojis, no hashtags, no 'In today's fast-paced world'.",
+  "skip_dirs": [
+    "node_modules",
+    ".git",
+    ".next",
+    "dist",
+    "build",
+    "cache"
+  ],
+  "private": [
+    "No names of private people (friends, family, beta users, clients). Public figures and authors of cited work are fine.",
+    "No secrets, tokens, passwords, emails, phone numbers, home-folder paths or internal URLs (dashboards, admin pages, preview links)."
+  ]
+}

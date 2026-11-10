@@ -12,7 +12,7 @@
   "studio_url": "",
   "site_url": "https://25collectiveco.com",
   "model": "",
-  "voice": "First person singular, plain and direct, builder-in-public. Honest about what failed and what it cost. Concrete numbers and tools over hype. Short paragraphs, a few H2 sections, one clear takeaway. 900-1500 words. No emojis, no hashtags, no 'In today's fast-paced world'.",
+  "voice": "First person singular, plain and direct, builder-in-public. Short: 450-700 words, never more. A few H2 sections, short paragraphs, one clear takeaway. Honest about what failed. Fluid, natural prose: full sentences joined with ordinary commas and conjunctions. Go easy on colons, dashes, semicolons, parentheses and quotation marks; no bold, no blockquotes, and bullet lists only when the content is truly a list. No emojis, no hashtags, no 'In today's fast-paced world'.",
   "skip_dirs": [
     "node_modules",
     ".git",

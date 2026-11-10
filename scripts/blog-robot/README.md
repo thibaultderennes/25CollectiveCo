@@ -27,6 +27,6 @@ themselves reveal something sit in `~/.config/25cc-blog/config.json`, which is n
 lists what was kept out ("Kept out for privacy"), so you can check before approving.
 
 ## Commands
-`draft [--dry-run] [--days N] [--force]` · `poll` · `publish [week]` · `status` · `doctor [--send-test]` · `install` · `uninstall`
+`draft [--dry-run] [--days N] [--force]` · `poll` · `publish [week]` · `replace <week> <post.json>` (hand-edited version) · `status` · `doctor [--send-test]` · `install` · `uninstall`
 Logs: `~/Library/Logs/25cc-blog.log`. State and the week's material: `~/.cache/25cc-blog/`.
 Settings: `config.json` (`draft_weekday` 0-6, Sunday = 0, default 5; `draft_time` "HH:MM"; `voice`; `model`; `studio_url`).

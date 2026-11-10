@@ -199,6 +199,12 @@ ${C.private.map((r) => `- ${r}`).join("\n")}
 - The material is raw notes: anything you aren't sure is public, leave out or describe generically.
 - You have no tools and need none: everything you need is in this prompt. Don't try to read files or run commands.
 
+Distance (how close to the week to stay):
+- Write the lesson, not the case file. A reader who knows nothing about his projects must get the idea; his situation is only the illustration.
+- Stay a step back from the specifics: describe the setup in general terms ("a small automated video pipeline", "an app I'm testing"), not by internal names, channels, features or architecture. Name a project only if it's on the public portfolio and the article needs it.
+- No exact cadences, dates, schedules, rollout plans, counts, internal settings or code-level details. Keep at most one or two concrete details per section, and only when they make the point clearer.
+- A little cryptic is fine, unclear is not: every paragraph should still say plainly what happened and why it matters.
+
 Voice: ${C.voice}`;
 
 const OUTPUT = `Answer with one JSON object and nothing else:
@@ -223,7 +229,7 @@ async function ask(prompt) {
 
 const writePrompt = (bundle) => `You are the ghostwriter for 25 Collective Co (25collectiveco.com), an independent studio that builds early-stage products in applied tech with one belief: technology should make us more human, not less. Write this week's blog article for the founder, Thibault, from what he actually built and researched this week (the material below).
 
-Pick ONE angle: the most interesting lesson, decision, research finding or build story of the week, useful to other builders. Ground it in specifics from the material (what was tried, what broke, what the numbers or sources said). Don't write a changelog or a list of everything done. Don't invent facts, results or quotes that aren't in the material; if a claim needs a source the material doesn't give, phrase it as his view.
+Pick ONE angle: the most interesting lesson, decision, research finding or build story of the week, useful to other builders. Base it on what really happened in the material (what was tried, what broke, what was learned), told at the distance described below. Don't write a changelog or a list of everything done. Don't invent facts, results or quotes that aren't in the material; if a claim needs a source the material doesn't give, phrase it as his view.
 
 ${RULES()}
 
@@ -263,10 +269,24 @@ function forInbox(post) {
   const t = draftText(post), room = 7800 - HOWTO.length;
   return (t.length > room ? t.slice(0, room) + "\n\n… (cut here: full text in the email and in Sanity Studio)" : t) + "\n\n" + HOWTO;
 }
+/** Markdown → readable plain text for the email: headings in capitals, no #, *, _, > or link brackets. */
+function plainText(md) {
+  return String(md).split("\n").map((l) => {
+    const h = l.match(/^#{1,6}\s+(.*)$/);
+    if (h) return h[1].toUpperCase();
+    return l.replace(/^>\s?/, "").replace(/^\s*[-*]\s+/, "• ");
+  }).join("\n")
+    .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, "$1 ($2)")
+    .replace(/\*\*(.+?)\*\*|__(.+?)__/g, "$1$2")
+    .replace(/(^|[^\w*])[*_]([^*_\n]+)[*_](?=[^\w*]|$)/g, "$1$2");
+}
+function emailText(post) {
+  return `${post.title}\n${post.description || ""}\n\n${plainText(post.body_md)}\n\n----------------------------------------\nAngle: ${post.angle || "—"}\nKept out for privacy: ${(post.left_out || []).join("; ") || "nothing flagged"}`;
+}
 function forEmail(post, week) {
   return `This week's 25CC article is ready for you to check (draft for ${week}). Nothing is published yet.\n\n` +
     `Approve or ask for changes on Jarvis Central: your Inbox, project 25CC. Reply "publish", "skip", or say what to change.\n` +
-    (C.studio_url ? `Or open it in Sanity Studio: ${C.studio_url}\n` : "") + `\n========================================\n\n${draftText(post)}\n`;
+    (C.studio_url ? `Or open it in Sanity Studio: ${C.studio_url}\n` : "") + `\n========================================\n\n${emailText(post)}\n`;
 }
 
 // ---------- commands ----------
@@ -362,6 +382,21 @@ async function cmdPoll() {
   saveState(state);
 }
 
+/** replace <week> <post.json>: swap a pending draft for a hand-edited version (same Sanity draft, same Jarvis thread). */
+async function cmdReplace() {
+  const state = loadState();
+  const d = state.drafts[argv[1]];
+  if (!d || d.status !== "pending") throw new Error(`no pending draft for week ${argv[1]}`);
+  const post = { ...d.post, ...JSON.parse(fs.readFileSync(argv[2], "utf8")) };
+  if (!post.title || !post.body_md) throw new Error("post JSON needs title and body_md");
+  d.post = post; d.revisions = (d.revisions || 0) + 1;
+  await saveDraft(d.week, post);
+  await api("PATCH", "/api/agent/messages", { id: d.message_id, status: "needs_you", reply: forInbox(post) });
+  sendEmail(`[25CC blog] Revised draft (v${d.revisions + 1}): ${post.title}`, forEmail(post, d.week));
+  saveState(state);
+  log("replaced", d.week, d.revisions);
+}
+
 async function cmdPublish() {
   const state = loadState();
   const d = argv[1] ? state.drafts[argv[1]] : Object.values(state.drafts).filter((x) => x.status === "pending").pop();
@@ -432,12 +467,13 @@ function cmdInstall(remove = false) {
 }
 
 const cmd = argv[0];
-const release = ["draft", "poll", "publish"].includes(cmd) ? lock(cmd === "draft" ? "draft" : "write") : () => {};
+const release = ["draft", "poll", "publish", "replace"].includes(cmd) ? lock(cmd === "draft" ? "draft" : "write") : () => {};
 if (!release) { log(`${cmd}: another run is busy, exiting`); process.exit(0); }
 try {
   if (cmd === "draft") await cmdDraft();
   else if (cmd === "poll") await cmdPoll();
   else if (cmd === "publish") await cmdPublish();
+  else if (cmd === "replace") await cmdReplace();
   else if (cmd === "status") cmdStatus();
   else if (cmd === "doctor") await cmdDoctor();
   else if (cmd === "install") cmdInstall();
